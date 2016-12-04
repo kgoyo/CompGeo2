@@ -1,6 +1,7 @@
 package segmentTree;
 
 import common.HorizontalLineSegment;
+import common.QueryLineSegment;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -47,8 +48,11 @@ public class SegmentTree {
         if (v.getInterval().getX1() >= segment.getX1() && v.getInterval().getX2() <= segment.getX2()) {
             v.store(segment);
         } else {
-            if (notEmptyIntersection(v.getLeft().getInterval(),segment)) {
-                //TODO do stuff
+            if (notEmptyIntersection(v.getLeft().getInterval(), segment)) {
+                insert(v.getLeft(), segment);
+            }
+            if (notEmptyIntersection(v.getRight().getInterval(), segment)) {
+                insert(v.getRight(), segment);
             }
         }
     }
@@ -62,4 +66,23 @@ public class SegmentTree {
         }
         return false;
     }
+
+    private List<HorizontalLineSegment> query(SegmentTreeNode v, QueryLineSegment queryLine) {
+        //report all intervals n I(v) TODO hvordan skal det her lige forsåes det er vel ikke bare returner alt for så returnerer vi det hele
+        if (v.getI().size() == 1) { //size is 1 when it is a leaf
+            SegmentTreeElementaryInterval leftInterval = v.getLeft().getInterval();
+            if (queryLine.getX() <= leftInterval.getX2() && queryLine.getX() >= leftInterval.getX1()) {
+                query(v.getLeft(),queryLine);
+            } else {
+                query(v.getRight(),queryLine);
+            }
+        }
+        return null; //FIXME
+    }
+
+    public List<HorizontalLineSegment> querySegmentTree(QueryLineSegment queryLine) {
+        return query(rootNode, queryLine);
+    }
+
+
 }

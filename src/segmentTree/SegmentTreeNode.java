@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by kgoyo on 01-12-2016.
  */
-public class SegmentTreeNode implements SegmentTreeElementInterface {
+public class SegmentTreeNode {
 
     private SegmentTreeNode left;
     private SegmentTreeNode right;
