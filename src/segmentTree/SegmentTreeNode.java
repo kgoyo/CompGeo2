@@ -32,16 +32,19 @@ public class SegmentTreeNode {
     }
 
     public SegmentTreeNode(List<SegmentTreeElementaryInterval> list) {
-        if (list.size() == 1) {
+        /*if (list.size() == 0) {
+            interval = null;
+        } else*/ if (list.size() == 1) {
             interval = list.get(0);
         } else {
             int middle = (int) Math.floor(list.size()/2);
+
+//            System.out.println(0+"->"+middle+";"+middle+"->"+(list.size()));
+
             List<SegmentTreeElementaryInterval> leftIntervals = list.subList(0,middle);
-            List<SegmentTreeElementaryInterval> rightIntervals = list.subList(middle,list.size()-1);
+            List<SegmentTreeElementaryInterval> rightIntervals = list.subList(middle,list.size());
             left = new SegmentTreeNode(leftIntervals);
             right = new SegmentTreeNode(rightIntervals);
-            //I.addAll(left.getI());
-            //I.addAll(right.getI());
             interval = new SegmentTreeElementaryInterval(
                     left.getInterval().getX1(),
                     right.getInterval().getX2());

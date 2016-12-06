@@ -24,6 +24,11 @@ public class HorizontalLineSegment implements Comparable<HorizontalLineSegment> 
     }
 
     @Override
+    public String toString() {
+        return "("+x1+","+x2+")";
+    }
+
+    @Override
     public int compareTo(HorizontalLineSegment o) {
         Double yy = y;
         return yy.compareTo(o.getY());

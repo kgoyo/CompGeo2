@@ -19,4 +19,9 @@ public class SegmentTreeElementaryInterval {
     public double getX2() {
         return x2;
     }
+
+    @Override
+    public String toString() {
+        return "\u001B[31m["+x1+","+x2+"]\u001B[0m";
+    }
 }
