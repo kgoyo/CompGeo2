@@ -2,7 +2,8 @@ package segmentTree;
 
 import common.HorizontalLineSegment;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -12,7 +13,7 @@ public class SegmentTreeNode {
 
     private SegmentTreeNode left;
     private SegmentTreeNode right;
-    private LinkedList<HorizontalLineSegment> I = new LinkedList<>();
+    private ArrayList<HorizontalLineSegment> I = new ArrayList<>();
     private SegmentTreeElementaryInterval interval;
 
     public SegmentTreeNode getLeft() {
@@ -23,7 +24,7 @@ public class SegmentTreeNode {
         return right;
     }
 
-    public LinkedList<HorizontalLineSegment> getI() {
+    public ArrayList<HorizontalLineSegment> getI() {
         return I;
     }
 

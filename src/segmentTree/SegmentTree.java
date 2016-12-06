@@ -5,12 +5,11 @@ import common.QueryLineSegment;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 
 public class SegmentTree {
     private final SegmentTreeNode rootNode;
-    private LinkedList<HorizontalLineSegment> res;
+    private ArrayList<HorizontalLineSegment> res;
 
     public SegmentTree (List<HorizontalLineSegment> list) {
 
@@ -32,7 +31,10 @@ public class SegmentTree {
 
         //construct and set intervals for all nodes.
         rootNode = new SegmentTreeNode(elementaryIntervals);
-
+        
+        //sort linesegments based on y coordinate
+        Collections.sort(list);
+        
         //insert intervals and get canonical subsets for all intervals
         for (HorizontalLineSegment segment : list) {
             insert(rootNode,segment);
@@ -55,31 +57,10 @@ public class SegmentTree {
                     insert(v.getRight(), segment);
                 }
             }
-
-            /*
-            if (v.getLeft()!= null) insert(v.getLeft(), segment);
-            if (v.getRight()!= null) insert(v.getRight(), segment);
-            */
         }
     }
 
     private boolean notEmptyIntersection(SegmentTreeElementaryInterval interval, HorizontalLineSegment segment) {
-        /*
-        if (interval.getX1() <= segment.getX2() && segment.getX1() <= interval.getX1()) {
-            return true;
-        }
-        if (interval.getX2() <= segment.getX2() && segment.getX1() <= interval.getX2()) {
-            return true;
-        }
-
-        if (segment.getX1() <= interval.getX2() && interval.getX1() <= segment.getX1()) {
-            return true;
-        }
-        if (segment.getX2() <= interval.getX2() && interval.getX1() <= segment.getX2()) {
-            return true;
-        }
-        */
-
         if (segment.getX1() >= interval.getX1() && segment.getX2() <= interval.getX2()) {
             return true;
         }
@@ -109,14 +90,48 @@ public class SegmentTree {
     }
 
     public List<HorizontalLineSegment> querySegmentTree(QueryLineSegment queryLine) {
-        res = new LinkedList<>();
+        res = new ArrayList<>();
         query(rootNode, queryLine);
-        return res;
+
+        Collections.sort(res);//FIXME should be sorted in advance
+
+        //filter res to the start and end point of the queryLine
+        int startIndex = findIndexBinarySearch(res,0,res.size()-1,queryLine.getY1());
+        List<HorizontalLineSegment> out = new ArrayList<>();
+        for (int i=startIndex; i<res.size(); i++) {
+            HorizontalLineSegment seg = res.get(i);
+            if (seg.getY() > queryLine.getY2()) {
+                break; //stop early to ensure for loop has O(k) running time
+            }
+            out.add(seg);
+        }
+        return out;
     }
 
     @Override
     public String toString() {
         return getString(rootNode);
+    }
+
+    private int findIndexBinarySearch(List<HorizontalLineSegment> segments,int start, int end, double qy) {
+        if (start == end) {
+            //base case
+            return start;
+        }
+        int middle = (int) Math.floor((segments.size()-start)/2+start);
+        if (segments.get(middle).getY() >= qy) {
+            //check if smallest greater than
+            if (middle>0) {
+                if (segments.get(middle-1).getY() < qy) {
+                    return middle; //the middle element is the smallest element greater than
+                }
+            } else {
+                return middle; //there is no smaller element
+            }
+            return findIndexBinarySearch(segments,0, middle-1,qy);
+        } else {
+            return findIndexBinarySearch(segments,middle, segments.size()-1,qy);
+        }
     }
 
     private String getString(SegmentTreeNode node) {

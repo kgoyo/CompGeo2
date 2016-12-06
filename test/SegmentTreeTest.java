@@ -16,13 +16,13 @@ public class SegmentTreeTest {
     public void setup() {
         List<HorizontalLineSegment> input = new ArrayList<>();
         HorizontalLineSegment l1 = new HorizontalLineSegment(1,3,0);
-        HorizontalLineSegment l2 = new HorizontalLineSegment(1.5,9,0);//
+        HorizontalLineSegment l2 = new HorizontalLineSegment(1.5,9,7);//not
         HorizontalLineSegment l3 = new HorizontalLineSegment(1.1,2,0);
-        HorizontalLineSegment l4 = new HorizontalLineSegment(4,7,0);//
+        HorizontalLineSegment l4 = new HorizontalLineSegment(4,7,2);//+
         HorizontalLineSegment l5 = new HorizontalLineSegment(2.5,2.6,0);
         HorizontalLineSegment l6 = new HorizontalLineSegment(8,10,0);
-        HorizontalLineSegment l7 = new HorizontalLineSegment(4.5,7.5,0);//
-        HorizontalLineSegment l8 = new HorizontalLineSegment(6,7.6,0);//
+        HorizontalLineSegment l7 = new HorizontalLineSegment(4.5,7.5,0);//+
+        HorizontalLineSegment l8 = new HorizontalLineSegment(6,7.6,0);
         HorizontalLineSegment l9 = new HorizontalLineSegment(11,12,0);
         input.add(l1);
         input.add(l2);
@@ -40,7 +40,7 @@ public class SegmentTreeTest {
     @Test
     public void someTest() {
 
-        QueryLineSegment queryLine = new QueryLineSegment(4.51,-10,10);
+        QueryLineSegment queryLine = new QueryLineSegment(4.51,6,8);
         List<HorizontalLineSegment> out = tree.querySegmentTree(queryLine);
         for (HorizontalLineSegment seg: out) {
             System.out.println(seg);
