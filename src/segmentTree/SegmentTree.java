@@ -77,9 +77,8 @@ public class SegmentTree {
     }
 
     private void query(SegmentTreeNode v, QueryLineSegment queryLine) {
-         res.addAll(v.getI());
+        res.addAll(v.getI());
         if (v.getLeft() != null || v.getRight() != null) {
-        //if (v.getI().size() > 1) { //size is 1 when it is a leaf
             SegmentTreeElementaryInterval leftInterval = v.getLeft().getInterval();
             if (queryLine.getX() <= leftInterval.getX2() && queryLine.getX() >= leftInterval.getX1()) {
                 query(v.getLeft(),queryLine);
@@ -118,7 +117,7 @@ public class SegmentTree {
             //base case
             return start;
         }
-        int middle = (int) Math.floor((segments.size()-start)/2+start);
+        int  middle = (int) Math.floor(((double)(end-start))/2)+start;
         if (segments.get(middle).getY() >= qy) {
             //check if smallest greater than
             if (middle>0) {
@@ -128,9 +127,9 @@ public class SegmentTree {
             } else {
                 return middle; //there is no smaller element
             }
-            return findIndexBinarySearch(segments,0, middle-1,qy);
+            return findIndexBinarySearch(segments,start, middle,qy);
         } else {
-            return findIndexBinarySearch(segments,middle, segments.size()-1,qy);
+            return findIndexBinarySearch(segments,middle+1, end,qy);
         }
     }
 

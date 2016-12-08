@@ -29,4 +29,21 @@ public class QueryLineSegment {
         this.y1 = y1;
         this.y2 = y2;
     }
+
+    public boolean doesIntersectX(HorizontalLineSegment other) {
+        if (other.getX1() > x) {
+            return false;
+        }
+        if (other.getX2() < x) {
+            return false;
+        }/*
+        if (y1 > other.getY()) {
+            return false;
+        }
+        if (y2 < other.getY()) {
+            return false;
+        }
+        */
+        return true;
+    }
 }

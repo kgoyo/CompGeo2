@@ -1,16 +1,16 @@
-import static org.junit.Assert.*;
-
 import common.HorizontalLineSegment;
 import common.QueryLineSegment;
-import org.junit.*;
+import intervalTree.IntervalTree;
+import org.junit.Before;
+import org.junit.Test;
 import segmentTree.SegmentTree;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SegmentTreeTest {
+public class IntervalTreeTest {
 
-    private SegmentTree tree;
+    private IntervalTree tree;
 
     @Before
     public void setup() {
@@ -33,14 +33,14 @@ public class SegmentTreeTest {
         input.add(l7);
         input.add(l8);
         input.add(l9);
-        tree = new SegmentTree(input);
-        System.out.println(tree);
+        tree = new IntervalTree(input);
+        //System.out.println(tree);
     }
 
     @Test
     public void someTest() {
 
-        QueryLineSegment queryLine = new QueryLineSegment(4.51,-10,10);
+        QueryLineSegment queryLine = new QueryLineSegment(6,-10,10);
         List<HorizontalLineSegment> out = tree.querySegmentTree(queryLine);
         for (HorizontalLineSegment seg: out) {
             System.out.println(seg);

@@ -25,7 +25,7 @@ public class HorizontalLineSegment implements Comparable<HorizontalLineSegment> 
 
     @Override
     public String toString() {
-        return "("+x1+","+x2+","+y+")";
+        return "("+x1+","+x2+";"+y+")";
     }
 
     @Override
