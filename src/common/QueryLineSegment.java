@@ -46,4 +46,20 @@ public class QueryLineSegment {
         */
         return true;
     }
+
+    public boolean isInRange3D(HorizontalLineSegment other) {
+        if (x < other.getX1()) {
+            return false;
+        }
+        if (x > other.getX2()) {
+            return false;
+        }
+        if (y1 > other.getY()) {
+            return false;
+        }
+        if (y2 < other.getY()) {
+            return false;
+        }
+        return true;
+    }
 }
