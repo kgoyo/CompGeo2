@@ -15,7 +15,8 @@ public class KDTree {
 
     public KDTree (List<HorizontalLineSegment> segments) {
         //segments correspond to the point (x1,x2,y)
-        rootNode = new KDTreeNode(segments, 0);
+        KDTreeRegion rootRegion = new KDTreeRegion(Double.MIN_VALUE,Double.MAX_VALUE,Double.MIN_VALUE,Double.MAX_VALUE,Double.MIN_VALUE,Double.MAX_VALUE);
+        rootNode = new KDTreeNode(segments, rootRegion, 0);
     }
 
     public List<HorizontalLineSegment> searchKDTree(QueryLineSegment R) {
@@ -31,18 +32,23 @@ public class KDTree {
                 res.add(segment);
             }
         } else {
-            if (isFullyContained(node.getVleft(),R)) {
-                reportSubTree(node.getVleft());
-            } else {
-                //if intersects R TODO
-                search(node.getVleft(),R);
+            if (node.getVleft() != null) {
+                if (isFullyContained(node.getVleft().getRegion(),R)) {
+                    reportSubTree(node.getVleft());
+                } else {
+                    if (intersect(node.getVleft().getRegion(),R)) {
+                        search(node.getVleft(), R);
+                    }
+                }
             }
-
-            if (isFullyContained(node.getVright(),R)) {
-                reportSubTree(node.getVright());
-            } else {
-                //if intersects R TODO
-                search(node.getVright(),R);
+            if (node.getVright() != null) {
+                if (isFullyContained(node.getVright().getRegion(),R)) {
+                    reportSubTree(node.getVright());
+                } else {
+                    if (intersect(node.getVright().getRegion(),R)) {
+                        search(node.getVright(), R);
+                    }
+                }
             }
         }
     }
@@ -56,7 +62,29 @@ public class KDTree {
         }
     }
 
-    private boolean isFullyContained(KDTreeNode node, QueryLineSegment R) {
-        return false; //TODO make proper implementation
+    private boolean isFullyContained(KDTreeRegion region, QueryLineSegment R) {
+        if (region.getX2() > R.getX()) {
+            return false;
+        }
+        if (R.getX() > region.getY1()) {
+            return false;
+        }
+        if (R.getY1() > region.getZ1() || region.getZ2() > R.getY2()) {
+            return false;
+        }
+        return true;
+    }
+
+    private boolean intersect(KDTreeRegion region, QueryLineSegment R) {
+        if (region.getX1() > R.getX()) {
+            return false;
+        }
+        if (R.getX() > region.getY2()) {
+            return false;
+        }
+        if (R.getY1() > region.getZ2() && region.getZ1() > R.getY2()) {
+            return false;
+        }
+        return true;
     }
 }
