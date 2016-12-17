@@ -29,17 +29,20 @@ public class IntervalTree {
     private void query(IntervalTreeNode v, QueryLineSegment queryLine) {
         if (!v.isLeaf()) {
             if ( queryLine.getX() < v.getXmid()) {
+                /*
                 for (HorizontalLineSegment seg: v.getLleft()){
                     if (queryLine.doesIntersectX(seg)) {
                         res.add(seg);
                     } else {
                         break;
                     }
-                }
+                }*/
+                res.addAll(v.getLleft().queryPrioSearchTree(queryLine));
                 if (v.getLc() != null) {
                     query(v.getLc(), queryLine);
                 }
             } else {
+                /*
                 for (HorizontalLineSegment seg: v.getLright()) {
                     if (queryLine.doesIntersectX(seg)) {
                         res.add(seg);
@@ -47,6 +50,8 @@ public class IntervalTree {
                         break;
                     }
                 }
+                */
+                res.addAll(v.getLright().queryPrioSearchTree(queryLine));
                 if (v.getRc() != null) {
                     query(v.getRc(), queryLine);
                 }

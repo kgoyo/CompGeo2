@@ -24,10 +24,12 @@ public class PrioritySearchTree {
         for (PrioritySearchTreeNode node: nodes) {
             reportIfInSearchPath(node,queryLine);
         }
-        PrioritySearchTreeNode vSplit = nodes.get(nodes.size()-1);
-        if (!vSplit.isLeaf()) {
-            traverseSubtree(vSplit.getLc(), queryLine, true);
-            traverseSubtree(vSplit.getRc(), queryLine, false);
+        if (nodes.size() > 0) {
+            PrioritySearchTreeNode vSplit = nodes.get(nodes.size() - 1);
+            if (!vSplit.isLeaf()) {
+                traverseSubtree(vSplit.getLc(), queryLine, true);
+                traverseSubtree(vSplit.getRc(), queryLine, false);
+            }
         }
         return res;
     }

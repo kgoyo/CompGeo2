@@ -2,6 +2,7 @@ package intervalTree;
 
 import common.HorizontalLineSegment;
 import common.QuickSelect;
+import prioritySearchTree.PrioritySearchTree;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,12 +14,14 @@ import java.util.List;
  */
 public class IntervalTreeNode {
 
-    private List<HorizontalLineSegment> lleft = new ArrayList<>();
-    private List<HorizontalLineSegment> lright = new ArrayList<>();
+
     private double xmid;
     private IntervalTreeNode lc;
     private  IntervalTreeNode rc;
     private boolean isLeaf = false;
+    private PrioritySearchTree lleft;
+    private PrioritySearchTree lright;
+
 
     public IntervalTreeNode(List<HorizontalLineSegment> segments) {
         if (segments.size() == 0) {
@@ -27,10 +30,12 @@ public class IntervalTreeNode {
             xmid = findMedianEndpoint(segments);
             List<HorizontalLineSegment> ileft = new ArrayList<>();
             List<HorizontalLineSegment> iright = new ArrayList<>();
+            List<HorizontalLineSegment> lleftList = new ArrayList<>();
+            List<HorizontalLineSegment> lrightList = new ArrayList<>();
             for (HorizontalLineSegment seg: segments) {
                 if (seg.getX1() <= xmid && seg.getX2() >= xmid) {
-                    lleft.add(seg);
-                    lright.add(seg);
+                    lleftList.add(seg);
+                    lrightList.add(seg);
                 }
                 if (seg.getX2() < xmid) {
                     ileft.add(seg);
@@ -39,18 +44,20 @@ public class IntervalTreeNode {
                     iright.add(seg);
                 }
             }
-            Collections.sort(lleft, new Comparator<HorizontalLineSegment>() {
+            Collections.sort(lleftList, new Comparator<HorizontalLineSegment>() {
                 @Override
                 public int compare(HorizontalLineSegment o1, HorizontalLineSegment o2) {
                     return ((Double) o1.getX1()).compareTo(o2.getX1());
                 }
             });
-            Collections.sort(lright, new Comparator<HorizontalLineSegment>() {
+            lleft = new PrioritySearchTree(lleftList);
+            Collections.sort(lrightList, new Comparator<HorizontalLineSegment>() {
                 @Override
                 public int compare(HorizontalLineSegment o1, HorizontalLineSegment o2) {
                     return ((Double) o1.getX2()).compareTo(o2.getX2());
                 }
             });
+            lright = new PrioritySearchTree(lrightList);
             if (segments.size() > 1) {
                 lc = new IntervalTreeNode(ileft);
                 rc = new IntervalTreeNode(iright);
@@ -58,11 +65,11 @@ public class IntervalTreeNode {
         }
     }
 
-    public List<HorizontalLineSegment> getLleft() {
+    public PrioritySearchTree getLleft() {
         return lleft;
     }
 
-    public List<HorizontalLineSegment> getLright() {
+    public PrioritySearchTree getLright() {
         return lright;
     }
 
