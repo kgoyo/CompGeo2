@@ -77,7 +77,22 @@ public class SegmentTree {
     }
 
     private void query(SegmentTreeNode v, QueryLineSegment queryLine) {
-        res.addAll(v.getI());
+        List<HorizontalLineSegment> segments = v.getI();
+        if (segments.size() > 0) {
+            try {
+                int startIndex = findIndexBinarySearch(segments, 0, segments.size() - 1, queryLine.getY1());
+                for (int i = startIndex; i < segments.size(); i++) {
+                    HorizontalLineSegment seg = segments.get(i);
+                    if (seg.getY() > queryLine.getY2()) {
+                        break; //stop early to ensure for loop has O(k) running time
+                    }
+                    res.add(seg);
+                }
+            } catch (NoIndexBinarySearchException e) {
+                //dont add anything
+            }
+        }
+
         if (v.getLeft() != null || v.getRight() != null) {
             SegmentTreeElementaryInterval leftInterval = v.getLeft().getInterval();
             if (queryLine.getX() <= leftInterval.getX2() && queryLine.getX() >= leftInterval.getX1()) {
@@ -91,20 +106,7 @@ public class SegmentTree {
     public List<HorizontalLineSegment> querySegmentTree(QueryLineSegment queryLine) {
         res = new ArrayList<>();
         query(rootNode, queryLine);
-
-        Collections.sort(res);//FIXME should be sorted in advance
-
-        //filter res to the start and end point of the queryLine
-        int startIndex = findIndexBinarySearch(res,0,res.size()-1,queryLine.getY1());
-        List<HorizontalLineSegment> out = new ArrayList<>();
-        for (int i=startIndex; i<res.size(); i++) {
-            HorizontalLineSegment seg = res.get(i);
-            if (seg.getY() > queryLine.getY2()) {
-                break; //stop early to ensure for loop has O(k) running time
-            }
-            out.add(seg);
-        }
-        return out;
+        return res;
     }
 
     @Override
@@ -112,10 +114,14 @@ public class SegmentTree {
         return getString(rootNode);
     }
 
-    private int findIndexBinarySearch(List<HorizontalLineSegment> segments,int start, int end, double qy) {
+    private int findIndexBinarySearch(List<HorizontalLineSegment> segments,int start, int end, double qy) throws NoIndexBinarySearchException {
         if (start == end) {
             //base case
-            return start;
+            if (segments.get(start).getY() > qy) {
+                return start;
+            } else {
+                throw new NoIndexBinarySearchException("no index above qy");
+            }
         }
         int  middle = (int) Math.floor(((double)(end-start))/2)+start;
         if (segments.get(middle).getY() >= qy) {
