@@ -29,6 +29,7 @@ public class RangeTree1D {
         return v;
     }
 
+    //FIXME use x or y????
     public List<HorizontalLineSegment> rangeQuery1D(double x1, double x2) {
         List<HorizontalLineSegment> res = new ArrayList<>();
         RangeTree1DNode vsplit = findSplitNode(x1,x2);
@@ -42,6 +43,16 @@ public class RangeTree1D {
                     v = v.getLc();
                 } else {
                     v = v.getRc();
+                }
+            }
+            //same as above but Lc and Rc is swapped
+            v = vsplit.getRc();
+            while (!v.isLeaf()) {
+                if (x2 <= v.getNodeValue()) {
+                    reportSubTree(v.getLc(),res);
+                    v = v.getRc();
+                } else {
+                    v = v.getLc();
                 }
             }
         }
