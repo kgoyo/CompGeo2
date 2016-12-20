@@ -39,8 +39,11 @@ public class MakeTestGeneratorTest {
             double x2 = randomWithinRange(1,rectMax);
             double y = randomWithinRange(1,rectMax);
 
-            while ( x2 < x1) {
-                x2 = randomWithinRange(1,rectMax);
+            if ( x2 < x1) {
+                double temp;
+                temp = x2;
+                x2 = x1;
+                x1 = temp;
             }
 
             segments.add(new HorizontalLineSegment(x1,x2,y));
