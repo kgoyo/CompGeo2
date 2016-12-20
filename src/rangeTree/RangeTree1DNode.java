@@ -23,15 +23,15 @@ public class RangeTree1DNode {
             isLeaf = true;
             leafPoint = segments.get(0);
         } else {
-            //find median y (X2)
-            List<Double> yValues = new ArrayList<>();
-            yValues.addAll(segments.stream().map(HorizontalLineSegment::getX2).collect(Collectors.toList()));
+            //find median x (X1)
+            List<Double> xValues = new ArrayList<>();
+            xValues.addAll(segments.stream().map(HorizontalLineSegment::getX1).collect(Collectors.toList()));
             //find median
-            nodeValue = yValues.get(QuickSelect.findMedian(yValues,0,yValues.size()-1));
+            nodeValue = xValues.get(QuickSelect.findMedian(xValues,0,xValues.size()-1));
             List<HorizontalLineSegment> lsegments = new ArrayList<>();
             List <HorizontalLineSegment> rsegments = new ArrayList<>();
             for (HorizontalLineSegment seg: segments) {
-                if (seg.getX2() <= nodeValue) {
+                if (seg.getX1() <= nodeValue) {
                     lsegments.add(seg);
                 } else {
                     rsegments.add(seg);
