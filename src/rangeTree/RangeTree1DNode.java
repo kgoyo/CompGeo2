@@ -27,7 +27,15 @@ public class RangeTree1DNode {
             List<Double> xValues = new ArrayList<>();
             xValues.addAll(segments.stream().map(HorizontalLineSegment::getX1).collect(Collectors.toList()));
             //find median
-            nodeValue = xValues.get(QuickSelect.findMedian(xValues,0,xValues.size()-1));
+            int medianIndex = QuickSelect.findMedian(xValues,0,xValues.size()-1);
+            for (Double d: xValues) {
+                System.out.print(d+ " ");
+            }
+            System.out.println();
+            //medianIndex = QuickSelect.findMedian(xValues,0,xValues.size()-1);
+            nodeValue = xValues.get(medianIndex);
+            System.out.println(medianIndex + "     " + nodeValue);
+
             List<HorizontalLineSegment> lsegments = new ArrayList<>();
             List <HorizontalLineSegment> rsegments = new ArrayList<>();
             for (HorizontalLineSegment seg: segments) {

@@ -18,9 +18,9 @@ public class QuickSelect {
         int pivot = (i+j)/2;
         double temp;
         while(i <= j){
-            while (a.get(i).compareTo(a.get(pivot)) == 1)
+            while (a.get(i) < a.get(pivot))
                 i++;
-            while (a.get(j).compareTo(a.get(pivot)) == -1)
+            while (a.get(j) > a.get(pivot))
                 j--;
             if(i <= j){
                 temp = a.get(i);
