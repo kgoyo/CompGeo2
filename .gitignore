@@ -14,5 +14,6 @@ hs_err_pid*
 # intellij
 .idea/
 out/
+input/
 GompGeo2.iml
 /CompGeo2.iml
