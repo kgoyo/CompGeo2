@@ -20,7 +20,6 @@ public class RangeTree2DNode {
     private RangeTree2DNode lc;
     private RangeTree2DNode rc;
 
-
     public RangeTree2DNode(List<HorizontalLineSegment> segments) {
         assoc = new RangeTree1D(segments);
         if (segments.size() == 1) {
@@ -29,7 +28,8 @@ public class RangeTree2DNode {
         } else {
             List<Double> values = new ArrayList<>();
             values.addAll(segments.stream().map(HorizontalLineSegment::getX2).collect(Collectors.toList()));
-            ymid = segments.get(QuickSelect.findMedian(values,0,segments.size()-1)).getX2();
+            int medianIndex = QuickSelect.findMedian(values,0,segments.size()-1);
+            ymid = values.get(medianIndex);
             List<HorizontalLineSegment> pLeft = new ArrayList<>();
             List<HorizontalLineSegment> pRight = new ArrayList<>();
             for (HorizontalLineSegment seg: segments) {

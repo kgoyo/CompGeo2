@@ -40,13 +40,30 @@ public class RangeTreeTest {
         input.add(l8);
         input.add(l9);
         tree1 = new RangeTree1D(input);
-        //tree2 = new RangeTree2D(input);
-        //tree3 = new RangeTree3D(input);
+        tree2 = new RangeTree2D(input);
+        tree3 = new RangeTree3D(input);
     }
 
     @Test
     public void testTree1() {
-        List<HorizontalLineSegment> out = tree1.rangeQuery1D(Double.MIN_VALUE, 4.51);
+        List<HorizontalLineSegment> out = tree1.rangeQuery1D(Double.MIN_VALUE, 4.5);
+        for (HorizontalLineSegment seg: out) {
+            System.out.println(seg);
+        }
+    }
+
+    @Test
+    public void testTree2() {
+        List<HorizontalLineSegment> out = tree2.rangeQuery2D(Double.MIN_VALUE,4.5,4.5,Double.MAX_VALUE);
+        for (HorizontalLineSegment seg: out) {
+            System.out.println(seg);
+        }
+    }
+
+    @Test
+    public void testTree3() {
+        QueryLineSegment queryLine = new QueryLineSegment(4.5,0,6);
+        List<HorizontalLineSegment> out = tree3.rangeQuery3D(queryLine);
         for (HorizontalLineSegment seg: out) {
             System.out.println(seg);
         }

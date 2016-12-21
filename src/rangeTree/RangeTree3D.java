@@ -47,7 +47,7 @@ public class RangeTree3D {
             v = vsplit.getRc();
             while (!v.isLeaf()) {
                 if (z2 > v.getZmid()) {
-                    res.addAll(v.getRc().getAssoc().rangeQuery2D(x1,x2,y1,y2));
+                    res.addAll(v.getLc().getAssoc().rangeQuery2D(x1,x2,y1,y2));
                     v = v.getRc();
                 } else {
                     v = v.getLc();

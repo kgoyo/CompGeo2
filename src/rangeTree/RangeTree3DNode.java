@@ -26,7 +26,8 @@ public class RangeTree3DNode {
         } else {
             List<Double> values = new ArrayList<>();
             values.addAll(segments.stream().map(HorizontalLineSegment::getY).collect(Collectors.toList()));
-            zmid = segments.get(QuickSelect.findMedian(values,0,segments.size()-1)).getY();
+            int medianIndex = (QuickSelect.findMedian(values,0,segments.size()-1));
+            zmid = values.get(medianIndex);
             List<HorizontalLineSegment> pLeft = new ArrayList<>();
             List<HorizontalLineSegment> pRight = new ArrayList<>();
             for (HorizontalLineSegment seg: segments) {

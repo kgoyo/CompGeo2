@@ -14,22 +14,22 @@ public class QuickSelect {
         }
         return index;
     }
-    public static int partition(List<Double> a, int i, int j ){
-        int pivot = (i+j)/2;
+
+    private static int partition(List<Double> nums, int start, int end) {
+        int pivot = start;
         double temp;
-        while(i <= j){
-            while (a.get(i) < a.get(pivot))
-                i++;
-            while (a.get(j) > a.get(pivot))
-                j--;
-            if(i <= j){
-                temp = a.get(i);
-                a.set(i, a.get(j));
-                a.set(j, temp);
-                i++;j--;
-            }
+        while (start <= end) {
+            while (start <= end && nums.get(start) <= nums.get(pivot)) start++;
+            while (start <= end && nums.get(end) > nums.get(pivot)) end--;
+            if (start > end) break;
+            temp = nums.get(start);
+            nums.set(start, nums.get(end));
+            nums.set(end, temp);
         }
-        return pivot;
+        temp = nums.get(end);
+        nums.set(end, nums.get(pivot));
+        nums.set(pivot, temp);
+        return end;
     }
 }
 
