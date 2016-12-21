@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
  */
 public class MakeTestGeneratorTest {
 
-    public ArrayList<HorizontalLineSegment> readSegmentsFromFile(File f){
+    public static ArrayList<HorizontalLineSegment> readSegmentsFromFile(File f){
         List<String> lines = null;
         ArrayList<HorizontalLineSegment> res = new ArrayList<>();
         try {
@@ -31,7 +31,7 @@ public class MakeTestGeneratorTest {
         return res;
     }
 
-    public File makeTestFile(int n, int rectMax){
+    public static File makeTestFile(int n, int rectMax){
 
         ArrayList<HorizontalLineSegment> segments = new ArrayList<>();
         for(int i = 0; i < n; i++){
@@ -112,7 +112,7 @@ public class MakeTestGeneratorTest {
         }
     }
 
-    private double randomWithinRange(double min, double max)
+    private static double randomWithinRange(double min, double max)
     {
         double range = (max - min);
         return (Math.random() * range) + min;
