@@ -33,7 +33,7 @@ public class PrioritySearchTreeTest {
         input.add(l8);
         input.add(l9);
         tree = new PrioritySearchTree(input);
-        System.out.println(tree);
+        //System.out.println(tree);
     }
 
     @Test

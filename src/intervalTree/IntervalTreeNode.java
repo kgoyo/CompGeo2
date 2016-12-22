@@ -95,6 +95,6 @@ public class IntervalTreeNode {
             endpoints.add(seg.getX1());
             endpoints.add(seg.getX2());
         }
-        return QuickSelect.findMedian(endpoints,0,endpoints.size()-1);
+        return endpoints.get(QuickSelect.findMedian(endpoints,0,endpoints.size()-1));
     }
 }

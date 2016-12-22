@@ -33,7 +33,7 @@ public class KDTreeNode {
                     values.addAll(segments.stream().map(HorizontalLineSegment::getX1).collect(Collectors.toList())); //X1->x
                     l = values.get(QuickSelect.findMedian(values,0,values.size()-1));
                     for (HorizontalLineSegment seg: segments) {
-                        if (seg.getX1() < l) {
+                        if (seg.getX1() <= l) {
                             p1.add(seg);
                         } else {
                             p2.add(seg);
@@ -46,7 +46,7 @@ public class KDTreeNode {
                     values.addAll(segments.stream().map(HorizontalLineSegment::getX2).collect(Collectors.toList())); //X2->y
                     l = values.get(QuickSelect.findMedian(values,0,values.size()-1));
                     for (HorizontalLineSegment seg: segments) {
-                        if (seg.getX2() < l) {
+                        if (seg.getX2() <= l) {
                             p1.add(seg);
                         } else {
                             p2.add(seg);
@@ -59,7 +59,7 @@ public class KDTreeNode {
                     values.addAll(segments.stream().map(HorizontalLineSegment::getY).collect(Collectors.toList())); //Y->z
                     l = values.get(QuickSelect.findMedian(values,0,values.size()-1));
                     for (HorizontalLineSegment seg: segments) {
-                        if (seg.getY() < l) {
+                        if (seg.getY() <= l) {
                             p1.add(seg);
                         } else {
                             p2.add(seg);

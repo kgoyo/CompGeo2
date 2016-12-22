@@ -4,14 +4,13 @@ import intervalTree.IntervalTree;
 import kdTree.KDTree;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import rangeTree.RangeTree3D;
 import segmentTree.SegmentTree;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Root on 21/12/2016.
@@ -22,9 +21,10 @@ public class RunTest {
 
     @BeforeClass
     public static void SetUp(){
-        input = MakeTestGeneratorTest.makeTestFile(1000,1000);
+        input = MakeTestGeneratorTest.makeTestFile(30,1000);
     }
 
+    @Ignore
     @Test
     public void make3DRangeTree() {
         System.out.println("\n3DRangeTree:");
@@ -40,6 +40,7 @@ public class RunTest {
         System.out.println("Size: "+lol.size());
     }
 
+    @Ignore
     @Test
     public void makeKDTree() {
         System.out.println("\nKDTree:");
@@ -68,6 +69,9 @@ public class RunTest {
         List<HorizontalLineSegment> lol = tree.querySegmentTree(new QueryLineSegment(500,250,750));
         System.out.println("Query time IntervalTree: "+(new Date().getTime()-start));
         System.out.println("Size: "+lol.size());
+        for (HorizontalLineSegment seg: lol) {
+            System.out.println(seg);
+        }
     }
 
     @Test
@@ -83,5 +87,8 @@ public class RunTest {
         List<HorizontalLineSegment> lol = tree.querySegmentTree(new QueryLineSegment(500,250,750));
         System.out.println("Query time SegmentTree: "+(new Date().getTime()-start));
         System.out.println("Size: "+lol.size());
+        for (HorizontalLineSegment seg: lol) {
+            System.out.println(seg);
+        }
     }
 }
