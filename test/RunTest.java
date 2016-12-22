@@ -67,12 +67,6 @@ public class RunTest {
         List<HorizontalLineSegment> lol = tree.querySegmentTree(new QueryLineSegment(500,250,750));
         System.out.println("Query time IntervalTree: "+(new Date().getTime()-start));
         System.out.println("Size: "+lol.size());
-        /*
-        Collections.sort(lol);
-        for (HorizontalLineSegment seg: lol) {
-            System.out.println(seg);
-        }
-        System.out.println(tree);*/
     }
 
     @Test
@@ -88,10 +82,5 @@ public class RunTest {
         List<HorizontalLineSegment> lol = tree.querySegmentTree(new QueryLineSegment(500,250,750));
         System.out.println("Query time SegmentTree: "+(new Date().getTime()-start));
         System.out.println("Size: "+lol.size());
-        /*
-        Collections.sort(lol);
-        for (HorizontalLineSegment seg: lol) {
-            System.out.println(seg);
-        }*/
     }
 }

@@ -30,17 +30,11 @@ public class IntervalTree {
         if (!v.isLeaf()) {
 
             if ( queryLine.getX() < v.getXmid()) {
-                if (v == rootNode) {
-                    System.out.println("hey1");
-                }
                 res.addAll(v.getLleft().queryPrioSearchTree(queryLine));
                 if (v.getLc() != null) {
                     query(v.getLc(), queryLine);
                 }
             } else {
-                if (v == rootNode) {
-                    System.out.println("hey2");
-                }
                 res.addAll(v.getLright().queryPrioSearchTree(queryLine));
                 if (v.getRc() != null) {
                     query(v.getRc(), queryLine);
