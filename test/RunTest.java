@@ -21,10 +21,9 @@ public class RunTest {
 
     @BeforeClass
     public static void SetUp(){
-        input = MakeTestGeneratorTest.makeTestFile(30,1000);
+        input = MakeTestGeneratorTest.makeTestFile(50000,1000);
     }
 
-    @Ignore
     @Test
     public void make3DRangeTree() {
         System.out.println("\n3DRangeTree:");
@@ -40,7 +39,6 @@ public class RunTest {
         System.out.println("Size: "+lol.size());
     }
 
-    @Ignore
     @Test
     public void makeKDTree() {
         System.out.println("\nKDTree:");
@@ -69,9 +67,12 @@ public class RunTest {
         List<HorizontalLineSegment> lol = tree.querySegmentTree(new QueryLineSegment(500,250,750));
         System.out.println("Query time IntervalTree: "+(new Date().getTime()-start));
         System.out.println("Size: "+lol.size());
+        /*
+        Collections.sort(lol);
         for (HorizontalLineSegment seg: lol) {
             System.out.println(seg);
         }
+        System.out.println(tree);*/
     }
 
     @Test
@@ -87,8 +88,10 @@ public class RunTest {
         List<HorizontalLineSegment> lol = tree.querySegmentTree(new QueryLineSegment(500,250,750));
         System.out.println("Query time SegmentTree: "+(new Date().getTime()-start));
         System.out.println("Size: "+lol.size());
+        /*
+        Collections.sort(lol);
         for (HorizontalLineSegment seg: lol) {
             System.out.println(seg);
-        }
+        }*/
     }
 }

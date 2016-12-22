@@ -10,6 +10,7 @@ import java.util.List;
 
 public class PrioritySearchTreeTest {
     private PrioritySearchTree tree;
+    private PrioritySearchTree tree2;
 
     @Before
     public void setup() {
@@ -32,15 +33,24 @@ public class PrioritySearchTreeTest {
         input.add(l7);
         input.add(l8);
         input.add(l9);
-        tree = new PrioritySearchTree(input);
+        tree = new PrioritySearchTree(input, true);
+        tree2 = new PrioritySearchTree(input, false);
         //System.out.println(tree);
     }
 
     @Test
     public void someTest() {
-
         QueryLineSegment queryLine = new QueryLineSegment(4.51,2.2,10);
         List<HorizontalLineSegment> out = tree.queryPrioSearchTree(queryLine);
+        for (HorizontalLineSegment seg: out) {
+            System.out.println(seg);
+        }
+    }
+
+    @Test
+    public void someTestRight() {
+        QueryLineSegment queryLine = new QueryLineSegment(4.51,2.2,10);
+        List<HorizontalLineSegment> out = tree2.queryPrioSearchTree(queryLine);
         for (HorizontalLineSegment seg: out) {
             System.out.println(seg);
         }

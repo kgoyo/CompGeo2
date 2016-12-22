@@ -28,34 +28,40 @@ public class IntervalTree {
 
     private void query(IntervalTreeNode v, QueryLineSegment queryLine) {
         if (!v.isLeaf()) {
+
             if ( queryLine.getX() < v.getXmid()) {
-                /*
-                for (HorizontalLineSegment seg: v.getLleft()){
-                    if (queryLine.doesIntersectX(seg)) {
-                        res.add(seg);
-                    } else {
-                        break;
-                    }
-                }*/
+                if (v == rootNode) {
+                    System.out.println("hey1");
+                }
                 res.addAll(v.getLleft().queryPrioSearchTree(queryLine));
                 if (v.getLc() != null) {
                     query(v.getLc(), queryLine);
                 }
             } else {
-                /*
-                for (HorizontalLineSegment seg: v.getLright()) {
-                    if (queryLine.doesIntersectX(seg)) {
-                        res.add(seg);
-                    } else {
-                        break;
-                    }
+                if (v == rootNode) {
+                    System.out.println("hey2");
                 }
-                */
                 res.addAll(v.getLright().queryPrioSearchTree(queryLine));
                 if (v.getRc() != null) {
                     query(v.getRc(), queryLine);
                 }
             }
         }
+    }
+
+    @Override
+    public String toString() {return getString(rootNode);}
+
+    private String getString(IntervalTreeNode node) {
+
+        String left = "";
+        String right = "";
+        if (node.getLc() != null) {
+            left = getString(node.getLc());
+        }
+        if (node.getRc() != null) {
+            right = getString(node.getRc());
+        }
+        return "(xmid: "+ node.getXmid() + " lp: " + node.getLleft() + " rp: " + node.getLright() + ";" + left+";"+ right +")";
     }
 }

@@ -31,13 +31,17 @@ public class MakeTestGeneratorTest {
         return res;
     }
 
-    public static File makeTestFile(int n, int rectMax){
+    public static File makeTestFile(int n, int rectMax) {
+        return makeTestFile(n,rectMax,rectMax);
+    }
+
+    public static File makeTestFile(int n, int rectMaxX, int rectMaxY){
 
         ArrayList<HorizontalLineSegment> segments = new ArrayList<>();
         for(int i = 0; i < n; i++){
-            double x1 = randomWithinRange(1,rectMax);
-            double x2 = randomWithinRange(1,rectMax);
-            double y = randomWithinRange(1,rectMax);
+            double x1 = randomWithinRange(1,rectMaxX);
+            double x2 = randomWithinRange(1,rectMaxX);
+            double y = randomWithinRange(1,rectMaxY);
 
             if ( x2 < x1) {
                 double temp;
@@ -54,7 +58,7 @@ public class MakeTestGeneratorTest {
             lines.add(segment.toString());
         }
 
-        Path file = Paths.get("input\\"+"InputSet-"+n+"-"+rectMax+".input");
+        Path file = Paths.get("input\\"+"InputSet-"+n+"-"+rectMaxX+".input");
         try {
             Files.write(file, lines, Charset.forName("UTF-8"));
         } catch (IOException e) {

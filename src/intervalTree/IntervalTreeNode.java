@@ -30,38 +30,20 @@ public class IntervalTreeNode {
             xmid = findMedianEndpoint(segments);
             List<HorizontalLineSegment> ileft = new ArrayList<>();
             List<HorizontalLineSegment> iright = new ArrayList<>();
-            List<HorizontalLineSegment> lleftList = new ArrayList<>();
-            List<HorizontalLineSegment> lrightList = new ArrayList<>();
+            List<HorizontalLineSegment> imid = new ArrayList<>();
             for (HorizontalLineSegment seg: segments) {
                 if (seg.getX1() <= xmid && seg.getX2() >= xmid) {
-                    lleftList.add(seg);
-                    lrightList.add(seg);
-                }
-                if (seg.getX2() < xmid) {
+                    imid.add(seg);
+                } else if (seg.getX2() < xmid) {
                     ileft.add(seg);
-                }
-                if (seg.getX1() > xmid) {
+                } else if (seg.getX1() > xmid) {
                     iright.add(seg);
                 }
             }
-            Collections.sort(lleftList, new Comparator<HorizontalLineSegment>() {
-                @Override
-                public int compare(HorizontalLineSegment o1, HorizontalLineSegment o2) {
-                    return ((Double) o1.getX1()).compareTo(o2.getX1());
-                }
-            });
-            lleft = new PrioritySearchTree(lleftList);
-            Collections.sort(lrightList, new Comparator<HorizontalLineSegment>() {
-                @Override
-                public int compare(HorizontalLineSegment o1, HorizontalLineSegment o2) {
-                    return ((Double) o1.getX2()).compareTo(o2.getX2());
-                }
-            });
-            lright = new PrioritySearchTree(lrightList);
-            if (segments.size() > 1) {
-                lc = new IntervalTreeNode(ileft);
-                rc = new IntervalTreeNode(iright);
-            }
+            lleft = new PrioritySearchTree(imid, true);
+            lright = new PrioritySearchTree(imid, false);
+            lc = new IntervalTreeNode(ileft);
+            rc = new IntervalTreeNode(iright);
         }
     }
 

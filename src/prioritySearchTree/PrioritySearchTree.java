@@ -12,9 +12,11 @@ import java.util.List;
 public class PrioritySearchTree {
     private final PrioritySearchTreeNode rootNode;
     private ArrayList<HorizontalLineSegment> res;
+    private boolean leftQuery;
 
-    public PrioritySearchTree(List<HorizontalLineSegment> segments) {
-        rootNode = new PrioritySearchTreeNode(segments);
+    public PrioritySearchTree(List<HorizontalLineSegment> segments, boolean leftQuery) {
+        this.leftQuery = leftQuery;
+        rootNode = new PrioritySearchTreeNode(segments, leftQuery);
     }
 
     public List<HorizontalLineSegment> queryPrioSearchTree(QueryLineSegment queryLine) {
@@ -49,10 +51,18 @@ public class PrioritySearchTree {
 
     private void reportIfInSearchPath(PrioritySearchTreeNode node, QueryLineSegment queryLine) {
         if (!node.isLeaf()) {
-            if (node.getpMin().getX1() <= queryLine.getX() &&
-                    node.getpMin().getY() >= queryLine.getY1() &&
-                    node.getpMin().getY() <= queryLine.getY2()) {
-                res.add(node.getpMin());
+            if (leftQuery) {
+                if (node.getpMin().getX1() <= queryLine.getX() &&
+                        node.getpMin().getY() >= queryLine.getY1() &&
+                        node.getpMin().getY() <= queryLine.getY2()) {
+                    res.add(node.getpMin());
+                }
+            } else {
+                if (node.getpMin().getX2() >= queryLine.getX() &&
+                        node.getpMin().getY() >= queryLine.getY1() &&
+                        node.getpMin().getY() <= queryLine.getY2()) {
+                    res.add(node.getpMin());
+                }
             }
         }
     }
@@ -80,10 +90,19 @@ public class PrioritySearchTree {
 
     private void reportInSubtree(PrioritySearchTreeNode node, double qx) {
         if (!node.isLeaf()) {
-            if (node.getpMin().getX1() <= qx) {
-                res.add(node.getpMin());
-                reportInSubtree(node.getLc(), qx);
-                reportInSubtree(node.getRc(), qx);
+            if (leftQuery) {
+                if (node.getpMin().getX1() <= qx) {
+                    res.add(node.getpMin());
+                    reportInSubtree(node.getLc(), qx);
+                    reportInSubtree(node.getRc(), qx);
+                }
+
+            } else {
+                if (node.getpMin().getX2() >= qx) {
+                    res.add(node.getpMin());
+                    reportInSubtree(node.getLc(), qx);
+                    reportInSubtree(node.getRc(), qx);
+                }
             }
         }
     }

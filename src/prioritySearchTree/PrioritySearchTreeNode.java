@@ -19,7 +19,7 @@ public class PrioritySearchTreeNode {
     private PrioritySearchTreeNode rc;
 
 
-    public PrioritySearchTreeNode(List<HorizontalLineSegment> segments) {
+    public PrioritySearchTreeNode(List<HorizontalLineSegment> segments, boolean leftQuery) {
         if (segments.size() == 0) {
             isLeaf = true;
             return;
@@ -27,8 +27,14 @@ public class PrioritySearchTreeNode {
         //find pMin
         pMin = null;
         for (HorizontalLineSegment  seg: segments) {
-            if (pMin == null || pMin.getX1() > seg.getX1()) {
-                pMin = seg;
+            if (leftQuery) {
+                if (pMin == null || pMin.getX1() > seg.getX1()) {
+                    pMin = seg;
+                }
+            } else {
+                if (pMin == null || pMin.getX2() < seg.getX2()) {
+                    pMin = seg; //pmin is a maximum when the 3 sided query points right
+                }
             }
         }
         //find ymid
@@ -49,8 +55,8 @@ public class PrioritySearchTreeNode {
                 above.add(seg);
             }
         }
-        lc = new PrioritySearchTreeNode(below);
-        rc = new PrioritySearchTreeNode(above);
+        lc = new PrioritySearchTreeNode(below, leftQuery);
+        rc = new PrioritySearchTreeNode(above, leftQuery);
     }
 
     public HorizontalLineSegment getpMin() {
